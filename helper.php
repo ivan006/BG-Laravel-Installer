@@ -1,21 +1,29 @@
 <?php
-echo 1;
 function install(){
+  // $commands = array(
+  //   "mv ../Reportify_Installer .../",
+  //   "rm -rf fulldir",
+  //   "mkdir fulldir",
+  //   "mv /tmp/file.txt fulldir/",
+  // );
+  $commands = array(
+    "pwd",
+    "ls",
+    "cd ../",
+    "pwd",
+    "ls",
+  );
+  $responce = run_command($commands);
+  echo "<pre>";
+  echo json_encode($responce,JSON_PRETTY_PRINT);
+  echo "</pre>";
+}
 
-    ob_start();
-    ?>
-    pwd
-    <?php
-    // mv ../Reportify_Installer .../
-    // rm -rf fulldir
-    // mkdir fulldir
-    // mv /tmp/file.txt fulldir/
-
-    $result = ob_get_contents();
-
-    ob_end_clean();
-    $response = array()
-    exec($result, $response);
-    print_r($response,true);
+function run_command($commands){
+  $responce = array();
+  foreach ($commands as $key => $command) {
+    $responce[$key] = shell_exec($command);
+  }
+  return $responce;
 }
 ?>
