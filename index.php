@@ -13,6 +13,11 @@ if (isset($_POST["password"])) {
     <div class="">
       Install success.
     </div>
+
+    <form action="" method="post">
+      <button type="submit" class="btn btn-primary">Rerun</button>
+    </form>
+
     <?php
 
     $result = ob_get_contents();
