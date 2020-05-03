@@ -12,7 +12,6 @@ if (isset($_POST["password"])) {
   if ($_POST["password"] == $password) {
     ob_start();
 
-    install();
     ?>
     <div class="">
       Install success.
@@ -24,8 +23,9 @@ if (isset($_POST["password"])) {
       </div>
       <button type="submit" class="btn btn-primary">Rerun</button>
     </form>
-
+    <br>
     <?php
+    install();
 
     $result = ob_get_contents();
 

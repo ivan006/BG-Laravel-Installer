@@ -6,29 +6,49 @@ function install(){
   //   "mkdir fulldir",
   //   "mv /tmp/file.txt fulldir/",
   // );
-  $commands = array(
-    "pwd",
-    "ls -la ..",
-    // "cd ../",
-    // "mv ../Reportify_Installer ../../",
-    // "mv ../Reportify_Installer ../",
-    // "cp ../Reportify_Installer ./temp",
-    "rm ../Reportify_Installer",
-    "pwd",
-    "ls -la",
+
+  // $commands = array(
+  //   "pwd",
+  //   "ls -la ..",
+  //   "rm -rf *",
+  //   "pwd",
+  //   "ls -la ..",
+  // );
+  // $responce = run_commands($commands);
+
+
+  $responce = array(
+    run_command("ls -la .."),
+    run_command("mv ../Reportify_Installer ../"),
+    // run_command("rm -rf *"),
+    // run_command("mv /Reportify_Installer ./"),
   );
-  $responce = run_commands($commands);
+
+  // $responce = array(
+  //   run_command("pwd"),
+  //   run_command("ls -la .."),
+  //   // run_command("rm -rf *"),
+  //   run_command("pwd"),
+  //   run_command("ls -la .."),
+  // );
+
+
   echo "<pre>";
-  // echo json_encode($responce,JSON_PRETTY_PRINT);
   echo reveal_array($responce);
   echo "</pre>";
 }
 
-function run_commands($commands){
+// function run_commands($commands){
+//   $responce = array();
+//   foreach ($commands as $key => $command) {
+//     $responce[$key." (". $command.")"] = shell_exec($command);
+//   }
+//   return $responce;
+// }
+
+function run_command($command){
   $responce = array();
-  foreach ($commands as $key => $command) {
-    $responce[$key." - ". $command] = shell_exec($command);
-  }
+  $responce[$command] = shell_exec($command);
   return $responce;
 }
 
@@ -36,18 +56,16 @@ function reveal_array($elements) {
   ob_start();
   foreach ($elements as $key => $element) {
     // code...
-    ?>
-    <details>
+    ?><details>
       <summary><?php echo $key ?></summary>
       <?php
       if (is_array($element)) {
-        reveal_array();
+        echo reveal_array($element);
       } else {
         echo $element;
       }
       ?>
-    </details>
-    <?php
+    </details><?php
   }
 
   $result = ob_get_contents();

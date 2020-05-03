@@ -7,3 +7,10 @@ https://stackoverflow.com/questions/7839699/echo-exec-working-but-exec-not
 https://support.rackspace.com/how-to/checking-linux-file-permissions-with-ls/
 https://www.presslabs.com/code/linux-file-system-permissions/
 https://www.php.net/manual/en/function.exec.php
+https://stackoverflow.com/questions/39050629/php-shell-exec-change-user-or-navigate-to-user-folder
+https://www.elated.com/understanding-permissions/
+https://stackoverflow.com/questions/1679045/php-exec-command-how-to-specify-working-directory
+https://stackoverflow.com/questions/2579017/php-file-that-should-run-once-and-delete-itself-is-it-possible
+https://stackoverflow.com/questions/10236091/php-exec-command-permission-denied
+https://stackoverflow.com/questions/55133284/why-cant-i-mv-a-directory-without-extra-write-permissions/55133940
+https://linuxize.com/post/remove-directory-linux/
