@@ -1,10 +1,12 @@
 <?php
+echo 1;
 function install(){
 
     ob_start();
     ?>
-    mv ../Reportify_Installer .../
+    pwd
     <?php
+    // mv ../Reportify_Installer .../
     // rm -rf fulldir
     // mkdir fulldir
     // mv /tmp/file.txt fulldir/
@@ -12,6 +14,8 @@ function install(){
     $result = ob_get_contents();
 
     ob_end_clean();
-    echo shell_exec($result);
+    $response = array()
+    exec($result, $response);
+    print_r($response,true);
 }
 ?>

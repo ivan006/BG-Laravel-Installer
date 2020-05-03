@@ -13,8 +13,11 @@ if (isset($_POST["password"])) {
     <div class="">
       Install success.
     </div>
-
     <form action="" method="post">
+      <div class="form-group" style="display:none;">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password" value="<?php echo $_POST["password"] ?>">
+      </div>
       <button type="submit" class="btn btn-primary">Rerun</button>
     </form>
 
