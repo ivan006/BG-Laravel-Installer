@@ -18,73 +18,64 @@ function install($home_dir_path){
 
   $result = array();
 
-  // find home dir
-  if (1==1) {
 
-    // echo command_title("cd $home_dir_path; pwd");
+  // echo command_title("cd $home_dir_path; pwd");
 
-    // echo $navigation_result;
-    $shell_result = rtrim(shell_exec("cd $home_dir_path; pwd"));
-    if ($shell_result !== $home_dir_path) {
-      $command_result = array(
-        "Find home dir",
-        "Fail",
-      );
-      array_push($result,$command_result);
-      return $result;
-    } else {
-      $command_result = array(
-        "Find home dir",
-        "Success",
-      );
-      array_push($result,$command_result);
-    }
+  // echo $navigation_result;
+  //
+
+  $FindDir = shell_find_dir($home_dir_path,"home");
+  if ( $FindDir[1] == "Success") {
+    array_push($result,$FindDir);
+  } else {
+    array_push($result,$FindDir);
+    return $result;
   }
 
   // download app
-  if (1==1) {
-    // code...
-    $shell_result = rtrim(exec(
-      "cd $home_dir_path;
-      git clone https://github.com/ivan006/FlexFile-3 2>&1"
-      , $outputs
-    ));
-
-    $command_result = array(
-      "Download app",
-      "<pre>".json_encode($outputs,JSON_PRETTY_PRINT)."</pre>",
-    );
-    array_push($result,$command_result);
-  }
+  $download_app = shell_write(
+    $home_dir_path,
+    "git clone https://github.com/ivan006/FlexFile-3",
+    "Download app"
+  );
+  array_push($result,$download_app);
 
   // find app dir
-  if (1==1) {
-
-    $shell_result = rtrim(shell_exec("cd $home_dir_path/FlexFile-3; pwd"));
-    $app_path = $home_dir_path."/FlexFile-3";
-    if ($shell_result !== $app_path) { return $result; }
-    $command_result = array(
-      "Find app dir",
-      "Success",
-    );
-    array_push($result,$command_result);
+  $app_path = $home_dir_path."/FlexFile-3";
+  $FindDir = shell_find_dir($home_dir_path."/FlexFile-3","app");
+  if ( $FindDir[1] == "Success") {
+    array_push($result,$FindDir);
+  } else {
+    array_push($result,$FindDir);
+    return $result;
   }
 
   // download libraries
-  if (1==1) {
-    // code...
-    $shell_result = rtrim(exec(
-      "cd $app_path;
-      composer install 2>&1"
-      , $outputs
-    ));
+  $download_app = shell_write(
+    $app_path,
+    "composer install",
+    "Download libraries"
+  );
+  array_push($result,$download_app);
 
-    $command_result = array(
-      "Download libraries",
-      "<pre>".json_encode($outputs,JSON_PRETTY_PRINT)."</pre>",
-    );
-    array_push($result,$command_result);
+  // find webroot dir
+  $webroot_path = $home_dir_path."/public_html";
+  $FindDir = shell_find_dir($webroot_path,"webroot");
+  if ( $FindDir[1] == "Success") {
+    array_push($result,$FindDir);
+  } else {
+    array_push($result,$FindDir);
+    return $result;
   }
+
+  // Deploy webroot files
+  $download_app = shell_write(
+    $webroot_path,
+    "cp $app_path/public/* ./",
+    "Deploy webroot files"
+  );
+  array_push($result,$download_app);
+
 
   return $result;
 }
@@ -136,6 +127,37 @@ function status_html($elements) {
   $result = ob_get_contents();
 
   ob_end_clean();
+  return $result;
+}
+
+function shell_find_dir($dir,$label){
+  $result = array(
+    "Find $label dir",
+  );
+  $shell_result = rtrim(shell_exec("cd $dir; pwd"));
+  if ($shell_result !== $dir) {
+    array_push($result,"Fail");
+  } else {
+    array_push($result,"Success");
+  }
+  return $result;
+}
+
+function shell_write($dir,$cmd,$label){
+  $result = array(
+    $label,
+  );
+
+  $shell_result = rtrim(exec(
+    "cd $dir;
+    $cmd 2>&1"
+    , $outputs
+  ));
+
+  $result = array(
+    "Download app",
+    "<pre>".json_encode($outputs,JSON_PRETTY_PRINT)."</pre>",
+  );
   return $result;
 }
 ?>

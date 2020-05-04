@@ -44,3 +44,5 @@ https://stackoverflow.com/questions/3530099/remove-trailing-newline
 google: keep table data at cetain width
 https://stackoverflow.com/questions/34024745/keeping-table-cells-consistent-width-when-data-missing
 https://www.w3schools.com/cssref/pr_tab_table-layout.asp
+https://stackoverflow.com/questions/20121997/linux-command-cp-producing-omitted-directory
+google: cp all file and folders
