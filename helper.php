@@ -17,12 +17,23 @@ function install(){
   // $responce = run_commands($commands);
 
 
-  $responce = array(
-    run_command("ls -la .."),
-    run_command("mv ../Reportify_Installer ../"),
-    // run_command("rm -rf *"),
-    // run_command("mv /Reportify_Installer ./"),
-  );
+  // $responce = array(
+  //   run_command("
+  //   pwd;
+  //   pwd;
+  //   "),
+  //   run_command("ls -la .."),
+  //   run_command("mv ../Reportify_Installer ../"),
+  //   // run_command("rm -rf *"),
+  //   // run_command("mv /Reportify_Installer ./"),
+  // );
+
+
+  $responce = run_command("
+  cd -P ..;
+  pwd;
+  pwd;
+  ");
 
   // $responce = array(
   //   run_command("pwd"),

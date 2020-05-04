@@ -14,3 +14,48 @@ https://stackoverflow.com/questions/2579017/php-file-that-should-run-once-and-de
 https://stackoverflow.com/questions/10236091/php-exec-command-permission-denied
 https://stackoverflow.com/questions/55133284/why-cant-i-mv-a-directory-without-extra-write-permissions/55133940
 https://linuxize.com/post/remove-directory-linux/
+https://stackoverflow.com/questions/5119946/find-exec-with-multiple-commands
+google: go to parent dirrectory of symlink
+https://unix.stackexchange.com/questions/11044/changing-parent-directory-with-symlinks
+https://tecadmin.net/linux-cd-command/
+google: "cd -P .." linux command
+https://www.howtoforge.com/linux-cd-command/
+https://stackoverflow.com/questions/11455268/find-out-location-of-symbolic-link-linux
+https://stackoverflow.com/questions/4532241/linux-find-all-symlinks-of-a-given-original-file-reverse-readlink/4535344#4535344
+google: locate any links mounted file systems with find(1)
+
+
+Shared server
+
+
+
+Ssh bluegpyuty@bluegemify.co.za
+<insert password here>
+Oriented urself to home directory type “pwd” to show ur location it should be “/usr/home/<ur username>
+Delete all contents
+See what in this folder with “ls”
+Delete it all with “rm -rf *”
+“git clone https://github.com/ivan006/FlexFile-3”
+?
+
+
+mv public_html/FlexFile-3 .
+
+
+
+
+ln -s /usr/www/users/bluegpyuty  public_html
+
+
+/var/www/bluegpyuty
+/usr/www/users/bluegpyuty/public
+https://xneelo.co.za/help-centre/website/ssh-to-your-hosting-server/
+https://xneelo.co.za/help-centre/website/what-are-the-full-file-paths-to-my-directories-on-a-xneelo-server/
+.gitignore
+
+
+composer install
+chown -R www-data:root /var/www/laravel
+chmod 755 /var/www/laravel/storage
+mv .env.example .env
+php artisan key:generate
