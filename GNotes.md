@@ -25,18 +25,25 @@ https://stackoverflow.com/questions/4532241/linux-find-all-symlinks-of-a-given-o
 google: locate any links mounted file systems with find(1)
 
 
-Shared server
+Shared server 2
 
-
-
-Ssh bluegpyuty@bluegemify.co.za
+ssh bluegpyuty@bluegemify.co.za
 <insert password here>
-Oriented urself to home directory type “pwd” to show ur location it should be “/usr/home/<ur username>
-Delete all contents
-See what in this folder with “ls”
-Delete it all with “rm -rf *”
+Oriented yourself to home directory type “pwd” to show ur location it should be “/usr/home/<ur username>
 “git clone https://github.com/ivan006/FlexFile-3”
-?
+composer install
+X
+chown -R www-data:root /var/www/laravel
+chmod 755 /var/www/laravel/storage
+mv .env.example .env
+php artisan key:generate
+
+
+cp -a FlexFile-3/public/. public_html/
+
+
+mv FlexFile-3/public/* public_html/
+mv public_html/* FlexFile-3/public/ (no)
 
 
 mv public_html/FlexFile-3 .
@@ -51,11 +58,6 @@ ln -s /usr/www/users/bluegpyuty  public_html
 /usr/www/users/bluegpyuty/public
 https://xneelo.co.za/help-centre/website/ssh-to-your-hosting-server/
 https://xneelo.co.za/help-centre/website/what-are-the-full-file-paths-to-my-directories-on-a-xneelo-server/
+https://unix.stackexchange.com/questions/50487/how-to-move-all-files-and-folders-via-mv-command
+https://askubuntu.com/questions/86822/how-can-i-copy-the-contents-of-a-folder-to-another-folder-in-a-different-directo
 .gitignore
-
-
-composer install
-chown -R www-data:root /var/www/laravel
-chmod 755 /var/www/laravel/storage
-mv .env.example .env
-php artisan key:generate
