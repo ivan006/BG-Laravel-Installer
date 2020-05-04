@@ -8,6 +8,7 @@ include("helper.php");
 $title = "Reportify Installer";
 
 
+
 if (1==1) {
   ob_start();
 
@@ -16,30 +17,6 @@ if (1==1) {
   } else {
     $password_value = "";
   }
-  ?>
-  <div class="form-group">
-
-        <label for="pwd">
-          <b>
-            Password:
-          </b>
-        </label>
-
-      <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password" value="<?php echo $password_value ?>">
-
-
-  </div>
-  <br>
-  <?php
-
-  $form_hidable_content = ob_get_contents();
-
-  ob_end_clean();
-  // code...
-}
-
-if (1==1) {
-  ob_start();
 
   if (isset($_POST["home_dir_path"])) {
     $home_dir_path = $_POST["home_dir_path"];
@@ -47,114 +24,51 @@ if (1==1) {
     $home_dir_path = "";
   }
   ?>
-  <div class="form-group">
-    <label>
-      <b>
-        Resolve Home Directory Confusion
-      </b>
-    </label>
-    <details>
-      <summary>
-        Help
-      </summary>
-      <ul>
-        <li>
-          As a security measure servers use a complicated file paths system.
-        </li>
-        <li>
-          Because your webroot directory is quite vulnerable you are also provided with a home directory.
-        </li>
-        <li>
-          A shortcut to your webroot is available in your home directory for your convenience.
-        </li>
-      </ul>
-      <pre>
-        .
-        ├─ /usr/home/[username]       <-("home directory")
-        | ├─ public_html              <-(link to "webroot directory")
-        | └─ www_logs
-        └─ /usr/www/users/[username]  <-("webroot directory")
-      </pre>
-      <ul>
-        <li>
-          However unfortunately this complication is not just an obstacle for hackers but is also confusing for us.
-        </li>
-        <li>
-          Please help us resolve our confusing by adding your home directory path.
-        </li>
-      </ul>
+
+  <form action="" method="post">
+    <div class="form-group">
+      <label for="pwd">
+        <b>
+          Password:
+        </b>
+      </label>
+
+      <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password" value="<?php echo $password_value ?>">
+    </div>
+    <div class="form-group">
+      <label>
+        <b>
+          Resolve Home Directory Confusion
+        </b>
+      </label>
+      <input type="text" class="form-control" placeholder="E.g. /usr/home/bluegpyuty" name="home_dir_path" value="<?php echo $home_dir_path ?>">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
 
 
-
-    </details>
-    <input type="text" class="form-control" placeholder="E.g. /usr/home/bluegpyuty" name="home_dir_path" value="<?php echo $home_dir_path ?>">
-  </div>
+  </form>
+  <br>
+  <br>
 
   <?php
 
-  $form_nonhidable_content = ob_get_contents();
+  $form = ob_get_contents();
 
   ob_end_clean();
   // code...
 }
 
+
+$result =  $form;
 if (isset($_POST["password"])) {
-
   if ($_POST["password"] == $password) {
-    ob_start();
-
-    ?>
-    <div class="">
-      Install success.
-    </div>
-
-    <form action="" method="post">
-      <div style="display:none;">
-        <?php echo $form_hidable_content ?>
-      </div>
-      <?php echo $form_nonhidable_content ?>
-      <button type="submit" class="btn btn-primary">Run</button>
-    </form>
-    <br>
-    <br>
-    <pre>
-      <?php echo install($home_dir_path); ?>
-    </pre>
-    <?php
-
-    $result = ob_get_contents();
-
-    ob_end_clean();
+    $install = install($home_dir_path);
+    $status = status_html($install);
+    $result = $result.$status;
   } else {
-    ob_start();
-
-    ?>
-    <div class="">
-      Failed to login.
-    </div>
-    <?php
-
-    $result = ob_get_contents();
-
-    ob_end_clean();
-
+    $result = $result."Failed to login.";
   }
-} else {
-  ob_start();
-
-  ?>
-
-  <form action="" method="post">
-    <?php echo $form_hidable_content ?>
-    <?php echo $form_nonhidable_content ?>
-    <button type="submit" class="btn btn-primary">Run</button>
-  </form>
-
-  <?php
-
-  $result = ob_get_contents();
-
-  ob_end_clean();
 }
 
 ?>

@@ -34,3 +34,13 @@ https://stackoverflow.com/questions/19699059/representing-directory-file-structu
 google: php exec run cd and persist
 https://stackoverflow.com/questions/7771913/cant-run-cd-command-in-php-shell-exec
 google: php trim trailing line breaks
+google: run php exec gitclone and get result
+https://stackoverflow.com/questions/38967368/execute-git-command-from-php-and-get-error-message-back
+https://stackoverflow.com/questions/8562544/executing-git-commands-via-php/8562666#8562666
+https://stackoverflow.com/questions/37752962/git-pull-command-work-from-terminal-but-not-with-php-shell-exec-via-git-repo
+https://stackoverflow.com/questions/3863699/php-exec-not-returning-error-message-in-output
+https://stackoverflow.com/questions/818255/in-the-shell-what-does-21-mean
+https://stackoverflow.com/questions/3530099/remove-trailing-newline
+google: keep table data at cetain width
+https://stackoverflow.com/questions/34024745/keeping-table-cells-consistent-width-when-data-missing
+https://www.w3schools.com/cssref/pr_tab_table-layout.asp
