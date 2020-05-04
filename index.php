@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 include("password.php");
 include("helper.php");
-$title = "Reportify Installer";
+$title = "Startupify Installer - A online admin system for startups";
 
 
 
@@ -23,13 +23,31 @@ if (1==1) {
   } else {
     $home_dir_path = "";
   }
+
+  if (isset($_POST["connect_to_db_name"])) {
+    $connect_to_db["name"] = $_POST["connect_to_db_name"];
+  } else {
+    $connect_to_db["name"] = "";
+  }
+
+  if (isset($_POST["connect_to_db_user"])) {
+    $connect_to_db["user"] = $_POST["connect_to_db_user"];
+  } else {
+    $connect_to_db["user"] = "";
+  }
+
+  if (isset($_POST["connect_to_db_password"])) {
+    $connect_to_db["password"] = $_POST["connect_to_db_password"];
+  } else {
+    $connect_to_db["password"] = "";
+  }
   ?>
 
   <form action="" method="post">
     <div class="form-group">
       <label for="pwd">
         <b>
-          Password:
+          Login
         </b>
       </label>
 
@@ -38,10 +56,22 @@ if (1==1) {
     <div class="form-group">
       <label>
         <b>
-          Resolve Home Directory Confusion
+          <!-- Resolve Home Directory Confusion -->
+          Find home directory
         </b>
       </label>
       <input type="text" class="form-control" placeholder="E.g. /usr/home/bluegpyuty" name="home_dir_path" value="<?php echo $home_dir_path ?>">
+    </div>
+    <div class="form-group">
+      <label>
+        <b>
+          <!-- Resolve Home Directory Confusion -->
+          Connect to DB
+        </b>
+      </label>
+      <input type="text" class="form-control" placeholder="Name" name="connect_to_db_name" value="<?php echo $connect_to_db["name"] ?>">
+      <input type="text" class="form-control" placeholder="User" name="connect_to_db_user" value="<?php echo $connect_to_db["user"] ?>">
+      <input type="text" class="form-control" placeholder="Password" name="connect_to_db_password" value="<?php echo $connect_to_db["password"] ?>">
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -63,7 +93,7 @@ if (1==1) {
 $result =  $form;
 if (isset($_POST["password"])) {
   if ($_POST["password"] == $password) {
-    $install = install($home_dir_path);
+    $install = install($home_dir_path,$connect_to_db);
     $result = $result.$install;
   } else {
     $result = $result."Failed to login.";

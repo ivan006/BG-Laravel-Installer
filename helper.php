@@ -1,5 +1,5 @@
 <?php
-function install($home_dir_path){
+function install($home_dir_path, $connect_to_db){
 
   // run_command("rm -rf *"),
   // run_command("ls -la .."),
@@ -50,13 +50,67 @@ function install($home_dir_path){
 
   $download_app = shell_write(
     $webroot_path,
-    "cp $app_path/public/* ./",
+    "cp -a $app_path/public/* ./",
     "Deploy webroot files"
   );
   array_push($result,$download_app);
 
+  // --------
 
-  return status_html($result);
+  // $webroot_path = $home_dir_path."/public_html";
+  // $FindDir = shell_find_dir($webroot_path,"webroot");
+  // if ( $FindDir[1] !== "Success") { return $result; }
+  // array_push($result,$FindDir);
+
+  // --------
+
+  $auto_loader_string_old = "__DIR__.'/..";
+  $auto_loader_string_new = "'$app_path";
+  $file = '../index.php';
+  file_put_contents($file,str_replace($auto_loader_string_old,$auto_loader_string_new,file_get_contents($file)));
+  array_push($result,array(
+    "Fix paths",
+    "Success"
+  ));
+
+  // --------
+
+  $download_app = shell_write(
+    $app_path,
+    "cp .env.example .env",
+    "Deploy .env"
+  );
+  array_push($result,$download_app);
+
+  // --------
+
+  $string_old_1 = "connect_to_db_name";
+  $string_new_1 = $connect_to_db["name"];
+  $string_old_2 = "connect_to_db_user";
+  $string_new_2 = $connect_to_db["user"];
+  $string_old_3 = "connect_to_db_password";
+  $string_new_3 = $connect_to_db["password"];
+  $download_app = shell_write(
+    $app_path,
+    "sed -i 's/$string_old_1/$string_new_1/g' .env;
+    sed -i 's/$string_old_2/$string_new_2/g' .env;
+    sed -i 's/$string_old_3/$string_new_3/g' .env",
+    "Save DB logins"
+  );
+  array_push($result,$download_app);
+
+  // --------
+
+  $download_app = shell_write(
+    $app_path,
+    "php artisan key:generate",
+    "Generate key"
+  );
+  array_push($result,$download_app);
+
+  $html = status_html($result);
+
+  return $html;
 }
 
 function status_html($elements) {

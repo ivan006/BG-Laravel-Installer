@@ -46,3 +46,10 @@ https://stackoverflow.com/questions/34024745/keeping-table-cells-consistent-widt
 https://www.w3schools.com/cssref/pr_tab_table-layout.asp
 https://stackoverflow.com/questions/20121997/linux-command-cp-producing-omitted-directory
 google: cp all file and folders
+https://askubuntu.com/questions/86822/how-can-i-copy-the-contents-of-a-folder-to-another-folder-in-a-different-directo
+google: linux shell find and replace in file
+https://askubuntu.com/questions/20414/find-and-replace-text-within-a-file-using-commands
+https://www.gnu.org/software/sed/manual/html_node/Escapes.html
+https://unix.stackexchange.com/questions/429476/how-to-substitute-single-apostrophes-to-double-apostrophes-with-sed/429488
+https://www.gnu.org/software/sed/manual/html_node/Extended-regexps.html
+https://stackoverflow.com/questions/3574999/replacing-file-content-in-php
