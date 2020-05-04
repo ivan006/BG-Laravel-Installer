@@ -10,3 +10,5 @@ This variant of flat file database is valuable because it is user friendly enoug
 But it’s ok because these advanced operations are often not required in startups. So this setup is perfect for beginner admin systems. On a side note in the initial phase of an administrative systems development it can really benefit from having flexibility.
 ## Type of data
 This system can facilitate normal business data. Both internal and external communication/data. Internal communication like accounting documents and external communication like marketing material.
+## Disclaimer
+Although this is theoretically a good system for startup businesses it may have problems later. Eventually migrating your data to a relational format hasn't yet been conceptualised.
