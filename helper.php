@@ -1,5 +1,5 @@
 <?php
-function install(){
+function install($home_dir_path){
   // $commands = array(
   //   "mv ../Reportify_Installer .../",
   //   "rm -rf fulldir",
@@ -29,19 +29,22 @@ function install(){
   // );
 
 
-  $responce = run_command("
-  cd -P ..;
-  pwd;
-  pwd;
-  ");
+  // cd ../../;
+  // cd accumfcauw;
+  // $responce = run_command("
+  // cd /usr/home/bluegpyuty/;
+  // pwd;
+  // ls;
+  // ");
 
-  // $responce = array(
-  //   run_command("pwd"),
-  //   run_command("ls -la .."),
-  //   // run_command("rm -rf *"),
-  //   run_command("pwd"),
-  //   run_command("ls -la .."),
-  // );
+  $responce = array(
+    run_command("pwd"),
+    // run_command("ls -la .."),
+    // run_command("rm -rf *"),
+    run_command("cd $home_dir_path; pwd"),
+    // run_command("pwd"),
+    // run_command("ls -la .."),
+  );
 
 
   echo "<pre>";
@@ -59,7 +62,7 @@ function install(){
 
 function run_command($command){
   $responce = array();
-  $responce[$command] = shell_exec($command);
+  $responce = "<b>".$command."</b><br>".shell_exec($command);
   return $responce;
 }
 

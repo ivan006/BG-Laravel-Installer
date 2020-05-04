@@ -29,3 +29,7 @@ https://www.howtoforge.com/linux-cd-command/
 https://stackoverflow.com/questions/11455268/find-out-location-of-symbolic-link-linux
 https://stackoverflow.com/questions/4532241/linux-find-all-symlinks-of-a-given-original-file-reverse-readlink/4535344#4535344
 google: locate any links mounted file systems with find(1)
+https://xneelo.co.za/help-centre/website/what-are-the-full-file-paths-to-my-directories-on-a-xneelo-server/
+https://stackoverflow.com/questions/19699059/representing-directory-file-structure-in-markdown-syntax
+google: php exec run cd and persist
+https://stackoverflow.com/questions/7771913/cant-run-cd-command-in-php-shell-exec
