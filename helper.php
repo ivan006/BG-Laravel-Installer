@@ -56,7 +56,7 @@ function install($home_dir_path){
   array_push($result,$download_app);
 
 
-  return $result;
+  return status_html($result);
 }
 
 function status_html($elements) {

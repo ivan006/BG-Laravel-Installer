@@ -64,8 +64,7 @@ $result =  $form;
 if (isset($_POST["password"])) {
   if ($_POST["password"] == $password) {
     $install = install($home_dir_path);
-    $status = status_html($install);
-    $result = $result.$status;
+    $result = $result.$install;
   } else {
     $result = $result."Failed to login.";
   }
