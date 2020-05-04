@@ -1,55 +1,33 @@
 <?php
 function install($home_dir_path){
-  // $commands = array(
-  //   "mv ../Reportify_Installer .../",
-  //   "rm -rf fulldir",
-  //   "mkdir fulldir",
-  //   "mv /tmp/file.txt fulldir/",
-  // );
-
-  // $commands = array(
-  //   "pwd",
-  //   "ls -la ..",
-  //   "rm -rf *",
-  //   "pwd",
-  //   "ls -la ..",
-  // );
-  // $responce = run_commands($commands);
 
 
-  // $responce = array(
-  //   run_command("
-  //   pwd;
-  //   pwd;
-  //   "),
-  //   run_command("ls -la .."),
-  //   run_command("mv ../Reportify_Installer ../"),
-  //   // run_command("rm -rf *"),
-  //   // run_command("mv /Reportify_Installer ./"),
-  // );
+  ob_start();
+
+  // run_command("pwd"),
+  // run_command("ls -la .."),
+  // run_command("rm -rf *"),
+  // run_command("pwd"),
+  // run_command("ls -la .."),
 
 
-  // cd ../../;
-  // cd accumfcauw;
-  // $responce = run_command("
-  // cd /usr/home/bluegpyuty/;
-  // pwd;
-  // ls;
-  // ");
+  // echo command_title("cd $home_dir_path; pwd");
+  $navigation_result = shell_exec("cd $home_dir_path; pwd");
+  // echo $navigation_result;
 
-  $responce = array(
-    run_command("pwd"),
-    // run_command("ls -la .."),
-    // run_command("rm -rf *"),
-    run_command("cd $home_dir_path; pwd"),
-    // run_command("pwd"),
-    // run_command("ls -la .."),
-  );
+  if (rtrim($navigation_result) == $home_dir_path) {
+    ?>
+    Home directory found
+    13
+    <?php
 
+  }
 
-  echo "<pre>";
-  echo reveal_array($responce);
-  echo "</pre>";
+  $result = ob_get_contents();
+
+  ob_end_clean();
+
+  return $result;
 }
 
 // function run_commands($commands){
@@ -60,9 +38,9 @@ function install($home_dir_path){
 //   return $responce;
 // }
 
-function run_command($command){
+function command_title($command){
   $responce = array();
-  $responce = "<b>".$command."</b><br>".shell_exec($command);
+  $responce = "<b>".$command."</b><br>";
   return $responce;
 }
 

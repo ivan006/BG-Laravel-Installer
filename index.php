@@ -117,8 +117,10 @@ if (isset($_POST["password"])) {
     </form>
     <br>
     <br>
+    <pre>
+      <?php echo install($home_dir_path); ?>
+    </pre>
     <?php
-    install($home_dir_path);
 
     $result = ob_get_contents();
 

@@ -33,3 +33,4 @@ https://xneelo.co.za/help-centre/website/what-are-the-full-file-paths-to-my-dire
 https://stackoverflow.com/questions/19699059/representing-directory-file-structure-in-markdown-syntax
 google: php exec run cd and persist
 https://stackoverflow.com/questions/7771913/cant-run-cd-command-in-php-shell-exec
+google: php trim trailing line breaks
