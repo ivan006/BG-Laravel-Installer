@@ -1,3 +1,9 @@
+https://xneelo.co.za/help-centre/website/ssh-to-your-hosting-server/
+https://xneelo.co.za/help-centre/website/what-are-the-full-file-paths-to-my-directories-on-a-xneelo-server/
+https://unix.stackexchange.com/questions/50487/how-to-move-all-files-and-folders-via-mv-command
+https://askubuntu.com/questions/86822/how-can-i-copy-the-contents-of-a-folder-to-another-folder-in-a-different-directo
+
+
 https://www.tecmint.com/delete-all-files-in-directory-except-one-few-file-extensions/
 https://unix.stackexchange.com/questions/153862/remove-all-files-directories-except-for-one-file
 https://unix.stackexchange.com/questions/77127/rm-rf-all-files-and-all-hidden-files-without-error
@@ -23,45 +29,3 @@ https://www.howtoforge.com/linux-cd-command/
 https://stackoverflow.com/questions/11455268/find-out-location-of-symbolic-link-linux
 https://stackoverflow.com/questions/4532241/linux-find-all-symlinks-of-a-given-original-file-reverse-readlink/4535344#4535344
 google: locate any links mounted file systems with find(1)
-
-
-Shared server
-
-
-
-Ssh bluegpyuty@bluegemify.co.za
-<insert password here>
-Oriented urself to home directory type “pwd” to show ur location it should be “/usr/home/<ur username>
-Delete all contents
-See what in this folder with “ls”
-Delete it all with “rm -rf *”
-?
-
-
-mv public_html/FlexFile-3 .
-
-
-
-
-ln -s /usr/www/users/bluegpyuty  public_html
-
-
-/var/www/bluegpyuty
-/usr/www/users/bluegpyuty/public
-https://xneelo.co.za/help-centre/website/ssh-to-your-hosting-server/
-https://xneelo.co.za/help-centre/website/what-are-the-full-file-paths-to-my-directories-on-a-xneelo-server/
-https://unix.stackexchange.com/questions/50487/how-to-move-all-files-and-folders-via-mv-command
-https://askubuntu.com/questions/86822/how-can-i-copy-the-contents-of-a-folder-to-another-folder-in-a-different-directo
-
-
-
-
-.gitignore
-
-
-“git clone https://github.com/ivan006/FlexFile-3”
-composer install
-chown -R www-data:root /var/www/laravel
-chmod 755 /var/www/laravel/storage
-mv .env.example .env
-php artisan key:generate
