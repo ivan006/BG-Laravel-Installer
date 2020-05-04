@@ -41,6 +41,7 @@ if (1==1) {
   } else {
     $connect_to_db["password"] = "";
   }
+
   ?>
 
   <form action="" method="post">
@@ -90,7 +91,7 @@ if (1==1) {
 }
 
 
-
+$result = "";
 if (isset($_POST["password"])) {
   if ($_POST["password"] == $password) {
     $install = install($home_dir_path,$connect_to_db);

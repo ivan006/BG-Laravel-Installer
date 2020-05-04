@@ -54,3 +54,24 @@ https://unix.stackexchange.com/questions/429476/how-to-substitute-single-apostro
 https://www.gnu.org/software/sed/manual/html_node/Extended-regexps.html
 https://stackoverflow.com/questions/3574999/replacing-file-content-in-php
 https://linuxize.com/post/remove-directory-linux/
+google: laravel Not Found  The requested URL was not found on this server.
+https://stackoverflow.com/questions/36303706/url-was-not-found-on-this-server-laravel
+https://stackoverflow.com/questions/28242495/laravel-the-requested-url-was-not-found-on-this-server
+google: linux copy everything including . files
+https://superuser.com/questions/61611/how-to-copy-with-cp-to-include-hidden-files-and-hidden-directories-and-their-con
+google: "cp -ar"
+https://unix.stackexchange.com/questions/207326/what-does-ar-flag-mean-for-cp
+google: laravel SQLSTATE[HY000] [2002] Connection refused
+https://stackoverflow.com/questions/58658735/laravel-6-4-1-sqlstatehy000-2002-connection-refused
+https://stackoverflow.com/questions/35394230/sqlstatehy000-2002-connection-refused-within-laravel-homestead
+google: laravel SQLSTATE[HY000] [2002] php_network_getaddresses
+https://stackoverflow.com/questions/47032410/laravel-5-5-sqlstatehy000-2002-php-network-getaddresses-getaddrinfo-failed/47037069
+google: at vendor/laravel/framework/src/Illuminate/Database/Connection.php:671
+https://laracasts.com/discuss/channels/general-discussion/cannot-run-php-artisan-migrate-commands-error-sqlstatehy000-1049?page=1#reply=600119
+https://stackoverflow.com/questions/20723803/pdoexception-sqlstatehy000-2002-no-such-file-or-directory
+google: laravel migrate Fatal error: Allowed memory size of
+https://laracasts.com/discuss/channels/laravel/php-fatal-error-allowed-memory-size
+google: "php artisan migrate --env=production" PHP Fatal error:  Allowed memory size of
+google: laravel SQLSTATE[HY000] [2002] No such file or directory (SQL: select *
+https://laracasts.com/discuss/channels/laravel/sqlstatehy000-2002-no-such-file-or-directory-sql-select-count
+https://stackoverflow.com/questions/28335210/sqlstatehy000-2002-no-such-file-or-directory-error-when-migrating-table-in

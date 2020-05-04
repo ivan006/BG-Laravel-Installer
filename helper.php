@@ -7,113 +7,152 @@ function install($home_dir_path, $connect_to_db){
   // ln -s /usr/www/users/bluegpyuty  public_html
 
   $result = array();
-
-  // --------
-
-  $FindDir = shell_find_dir($home_dir_path,"home");
-  if ( $FindDir[1] !== "Success") { return $result; }
-  array_push($result,$FindDir);
-
-  // --------
-
-  $download_app = shell_write(
-    $home_dir_path,
-    "rm -rf 'FlexFile-3'",
-    "Clear space for the app"
-  );
-  array_push($result,$download_app);
-
-  // --------
-
-  $download_app = shell_write(
-    $home_dir_path,
-    "git clone https://github.com/ivan006/FlexFile-3",
-    "Download app"
-  );
-  array_push($result,$download_app);
-
-  // --------
-
   $app_path = $home_dir_path."/FlexFile-3";
-  $FindDir = shell_find_dir($home_dir_path."/FlexFile-3","app");
-  if ( $FindDir[1] !== "Success") { return $result; }
-  array_push($result,$FindDir);
-
-  // --------
-
-  $download_app = shell_write(
-    $app_path,
-    "composer install",
-    "Download libraries"
-  );
-  array_push($result,$download_app);
-
-  // --------
-
+  // /usr/home/bluegpyuty/FlexFile-3
   $webroot_path = $home_dir_path."/public_html";
-  $FindDir = shell_find_dir($webroot_path,"webroot");
-  if ( $FindDir[1] !== "Success") { return $result; }
-  array_push($result,$FindDir);
 
-  // --------
+  if (1==1) {
+    // code...
+    // --------
 
-  $download_app = shell_write(
+    $FindDir = shell_find_dir($home_dir_path,"home");
+    if ( $FindDir[1] !== "Success") { return $result; }
+    array_push($result,$FindDir);
+
+    // --------
+
+    $download_app = shell_write(
+      $home_dir_path,
+      "rm -rf 'FlexFile-3'",
+      "Clear space for the app"
+    );
+    array_push($result,$download_app);
+
+    // --------
+
+    $download_app = shell_write(
+      $home_dir_path,
+      "git clone https://github.com/ivan006/FlexFile-3",
+      "Download app"
+    );
+    array_push($result,$download_app);
+
+    // --------
+
+    $FindDir = shell_find_dir($app_path,"app");
+    if ( $FindDir[1] !== "Success") { return $result; }
+    array_push($result,$FindDir);
+
+    // --------
+
+    $download_app = shell_write(
+      $app_path,
+      "composer install",
+      "Download libraries"
+    );
+    array_push($result,$download_app);
+
+    // --------
+
+    $FindDir = shell_find_dir($webroot_path,"webroot");
+    if ( $FindDir[1] !== "Success") { return $result; }
+    array_push($result,$FindDir);
+
+    // --------
+
+    $download_app = shell_write(
     $webroot_path,
     "cp -a $app_path/public/* ./",
-    "Deploy webroot files"
-  );
-  array_push($result,$download_app);
+    "Deploy webroot files part 1"
+    );
+    array_push($result,$download_app);
 
-  // --------
+    // --------
 
-  // $webroot_path = $home_dir_path."/public_html";
-  // $FindDir = shell_find_dir($webroot_path,"webroot");
-  // if ( $FindDir[1] !== "Success") { return $result; }
-  // array_push($result,$FindDir);
+    $download_app = shell_write(
+    $webroot_path,
+    "cp -r $app_path/public/.htaccess ./",
+    "Deploy webroot files part 2"
+    );
+    array_push($result,$download_app);
 
-  // --------
+    // --------
 
-  $auto_loader_string_old = "__DIR__.'/..";
-  $auto_loader_string_new = "'$app_path";
-  $file = '../index.php';
-  file_put_contents($file,str_replace($auto_loader_string_old,$auto_loader_string_new,file_get_contents($file)));
-  array_push($result,array(
-    "Fix paths",
+    $auto_loader_string_old = "__DIR__.'/..";
+    $auto_loader_string_new = "'$app_path";
+    $file = '../index.php';
+    file_put_contents($file,str_replace($auto_loader_string_old,$auto_loader_string_new,file_get_contents($file)));
+    array_push($result,array(
+    "Fix paths part 1",
     "Success"
-  ));
+    ));
 
-  // --------
+    // --------
 
-  $download_app = shell_write(
+    // $auto_loader_string_old = "__DIR__.'";
+    // $auto_loader_string_new = "'$app_path";
+    // $file = '../index.php';
+    // $download_app = shell_write(
+    //   $app_path,
+    //   "cp .env.example .env",
+    //   "Fix paths part 2"
+    // );
+    // array_push($result,$download_app);
+
+    // --------
+
+    $shell_result = shell_write(
+    $app_path,
+    "chown -R www-data:root $app_path;
+    chmod 755 $app_path/storage",
+    "Fix file permissions"
+    );
+    array_push($result,$shell_result);
+
+    // --------
+
+    $download_app = shell_write(
     $app_path,
     "cp .env.example .env",
     "Deploy .env"
-  );
-  array_push($result,$download_app);
+    );
+    array_push($result,$download_app);
 
-  // --------
+    // --------
 
-  $string_old_1 = "connect_to_db_name";
-  $string_new_1 = $connect_to_db["name"];
-  $string_old_2 = "connect_to_db_user";
-  $string_new_2 = $connect_to_db["user"];
-  $string_old_3 = "connect_to_db_password";
-  $string_new_3 = $connect_to_db["password"];
-  $download_app = shell_write(
+    $string_old_1 = "connect_to_db_name";
+    $string_new_1 = $connect_to_db["name"];
+    $string_old_2 = "connect_to_db_user";
+    $string_new_2 = $connect_to_db["user"];
+    $string_old_3 = "connect_to_db_password";
+    $string_new_3 = $connect_to_db["password"];
+    $download_app = shell_write(
     $app_path,
     "sed -i 's/$string_old_1/$string_new_1/g' .env;
     sed -i 's/$string_old_2/$string_new_2/g' .env;
     sed -i 's/$string_old_3/$string_new_3/g' .env",
     "Save DB logins"
-  );
-  array_push($result,$download_app);
+    );
+    array_push($result,$download_app);
 
-  // --------
+    // --------
 
-  $download_app = shell_write(
+    $download_app = shell_write(
     $app_path,
     "php artisan key:generate",
     "Generate key"
+    );
+    array_push($result,$download_app);
+  }
+
+  // --------
+
+  // "php artisan migrate",
+  $download_app = shell_write(
+    $app_path,
+    "php artisan migrate --env=production;
+    yes;",
+    "Structure authentication database"
   );
   array_push($result,$download_app);
 
