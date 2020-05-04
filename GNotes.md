@@ -53,3 +53,4 @@ https://www.gnu.org/software/sed/manual/html_node/Escapes.html
 https://unix.stackexchange.com/questions/429476/how-to-substitute-single-apostrophes-to-double-apostrophes-with-sed/429488
 https://www.gnu.org/software/sed/manual/html_node/Extended-regexps.html
 https://stackoverflow.com/questions/3574999/replacing-file-content-in-php
+https://linuxize.com/post/remove-directory-linux/

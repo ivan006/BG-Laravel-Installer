@@ -18,6 +18,15 @@ function install($home_dir_path, $connect_to_db){
 
   $download_app = shell_write(
     $home_dir_path,
+    "rm -rf 'FlexFile-3'",
+    "Clear space for the app"
+  );
+  array_push($result,$download_app);
+
+  // --------
+
+  $download_app = shell_write(
+    $home_dir_path,
     "git clone https://github.com/ivan006/FlexFile-3",
     "Download app"
   );

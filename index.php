@@ -90,13 +90,13 @@ if (1==1) {
 }
 
 
-$result =  $form;
+
 if (isset($_POST["password"])) {
   if ($_POST["password"] == $password) {
     $install = install($home_dir_path,$connect_to_db);
-    $result = $result.$install;
+    $result = $install;
   } else {
-    $result = $result."Failed to login.";
+    $result = "Failed to login.";
   }
 }
 
@@ -117,7 +117,13 @@ if (isset($_POST["password"])) {
     <div class="container">
 
       <h3><?php echo $title ?></h3>
-      <?php echo $result; ?>
+      <?php echo $form ?>
+      <details>
+        <summary>
+          Status
+        </summary>
+        <?php echo $result; ?>
+      </details>
     </div>
   </body>
 </html>
