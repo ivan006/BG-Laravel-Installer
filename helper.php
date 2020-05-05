@@ -366,8 +366,7 @@ function cmd_populate_database($result,$dir,$form){
     // php artisan cache:clear;
     // php artisan migrate --env=production;
     // yes;",
-    "php artisan migrate --env=production;
-    yes;",
+    "php artisan migrate",
     "Populate database"
   );
   array_push($result,$cmd_result);
