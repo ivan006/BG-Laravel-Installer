@@ -42,6 +42,17 @@ if (1==1) {
     $connect_to_db["password"] = "";
   }
 
+  $step = 1;
+  $step_value = 1;
+  if (isset($_POST["step"])) {
+    $step = $_POST["step"];
+    if ($step == 1) {
+      $step_value = 2;
+    } elseif ($step >= 2) {
+      $step_value = 3;
+    }
+  }
+
   ?>
 
   <form action="" method="post">
@@ -74,6 +85,15 @@ if (1==1) {
       <input type="text" class="form-control" placeholder="User" name="connect_to_db_user" value="<?php echo $connect_to_db["user"] ?>">
       <input type="text" class="form-control" placeholder="Password" name="connect_to_db_password" value="<?php echo $connect_to_db["password"] ?>">
     </div>
+    <div class="form-group">
+      <label>
+        <b>
+          Step
+        </b>
+      </label>
+      <p>Run all steps please, in order.</p>
+      <input type="number" id="" name="step" min="1" max="3" value="<?php echo $step_value ?>">
+    </div>
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>
 
@@ -94,7 +114,8 @@ if (1==1) {
 $result = "";
 if (isset($_POST["password"])) {
   if ($_POST["password"] == $password) {
-    $install = install($home_dir_path,$connect_to_db);
+    $step = $_POST["step"];
+    $install = install($home_dir_path,$connect_to_db,$step);
     $result = $install;
   } else {
     $result = "Failed to login.";

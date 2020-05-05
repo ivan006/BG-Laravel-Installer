@@ -75,3 +75,20 @@ google: "php artisan migrate --env=production" PHP Fatal error:  Allowed memory 
 google: laravel SQLSTATE[HY000] [2002] No such file or directory (SQL: select *
 https://laracasts.com/discuss/channels/laravel/sqlstatehy000-2002-no-such-file-or-directory-sql-select-count
 https://stackoverflow.com/questions/28335210/sqlstatehy000-2002-no-such-file-or-directory-error-when-migrating-table-in
+google: ssh: connect to host bluegemify.co.za port 22: Connection timed out
+https://askubuntu.com/questions/650518/ssh-connect-to-host-hostname-port-22-connection-timed-out
+google: #1709 - Index column size too large. The maximum column size is 767 bytes.
+https://stackoverflow.com/questions/30761867/mysql-error-the-maximum-column-size-is-767-bytes
+google: ADD KEY `password_resets_email_index` (`email`)
+https://stackoverflow.com/questions/23786359/laravel-migration-unique-key-is-too-long-even-if-specified
+google; innodb_large_prefix
+https://stackoverflow.com/questions/35847015/mysql-change-innodb-large-prefix
+https://stackoverflow.com/questions/43891256/sqlstatehy000-2002-no-such-file-or-directory-sql-select-count-as-aggreg
+google: 197.245.197.95
+google: Illuminate\Database\QueryException SQLSTATE[HY000] [2002] No such file or directory
+https://laracasts.com/discuss/channels/laravel/illuminatedatabasequeryexception-sqlstatehy000-2002-no-such-file-or-directory
+https://stackoverflow.com/questions/59388522/laravel-migrate-sqlstatehy000-2002-connection-refused
+https://github.com/laravel/framework/issues/19522
+google: [     "PHP Warning:  require(\/usr\/home\/bluegpyuty\/FlexFile-3\/vendor\/autoload.php): failed to open stream: No such file or directory in \/usr\/home\/bluegpyuty\/FlexFile-3\/artisan on line 18",     "PHP Fatal error:  require(): Failed opening required '\/usr\/home\/bluegpyuty\/FlexFile-3\/vendor\/autoload.php' (include_path='.:\/usr\/share\/php') in \/usr\/home\/bluegpyuty\/FlexFile-3\/artisan on line 18" ]
+https://stackoverflow.com/questions/26193314/could-not-open-input-file-artisan
+https://stackoverflow.com/questions/28385251/laravel-sqlstatehy000-2002-connection-refused
