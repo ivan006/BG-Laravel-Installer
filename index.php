@@ -42,6 +42,12 @@ if (1==1) {
     $connect_to_db["password"] = "";
   }
 
+  if (isset($_POST["connect_to_db_host"])) {
+    $connect_to_db["host"] = $_POST["connect_to_db_host"];
+  } else {
+    $connect_to_db["host"] = "";
+  }
+
   $step = 1;
   $step_value = 1;
   if (isset($_POST["step"])) {
@@ -81,6 +87,7 @@ if (1==1) {
           Connect to DB
         </b>
       </label>
+      <input type="text" class="form-control" placeholder="Host (e.g. sql31.jnb1.host-h.net)" name="connect_to_db_host" value="<?php echo $connect_to_db["host"] ?>">
       <input type="text" class="form-control" placeholder="Name" name="connect_to_db_name" value="<?php echo $connect_to_db["name"] ?>">
       <input type="text" class="form-control" placeholder="User" name="connect_to_db_user" value="<?php echo $connect_to_db["user"] ?>">
       <input type="text" class="form-control" placeholder="Password" name="connect_to_db_password" value="<?php echo $connect_to_db["password"] ?>">

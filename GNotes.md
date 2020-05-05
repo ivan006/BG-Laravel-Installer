@@ -61,6 +61,9 @@ google: linux copy everything including . files
 https://superuser.com/questions/61611/how-to-copy-with-cp-to-include-hidden-files-and-hidden-directories-and-their-con
 google: "cp -ar"
 https://unix.stackexchange.com/questions/207326/what-does-ar-flag-mean-for-cp
+
+<!-- wtf start -->
+
 google: laravel SQLSTATE[HY000] [2002] Connection refused
 https://stackoverflow.com/questions/58658735/laravel-6-4-1-sqlstatehy000-2002-connection-refused
 https://stackoverflow.com/questions/35394230/sqlstatehy000-2002-connection-refused-within-laravel-homestead
@@ -92,3 +95,8 @@ https://github.com/laravel/framework/issues/19522
 google: [     "PHP Warning:  require(\/usr\/home\/bluegpyuty\/FlexFile-3\/vendor\/autoload.php): failed to open stream: No such file or directory in \/usr\/home\/bluegpyuty\/FlexFile-3\/artisan on line 18",     "PHP Fatal error:  require(): Failed opening required '\/usr\/home\/bluegpyuty\/FlexFile-3\/vendor\/autoload.php' (include_path='.:\/usr\/share\/php') in \/usr\/home\/bluegpyuty\/FlexFile-3\/artisan on line 18" ]
 https://stackoverflow.com/questions/26193314/could-not-open-input-file-artisan
 https://stackoverflow.com/questions/28385251/laravel-sqlstatehy000-2002-connection-refused
+https://stackoverflow.com/questions/50882927/setting-up-mysql-php-artisan-migrate-sqlstatehy000-2002-no-such-file-or-di
+https://www.rainbowspuppiessunshine.com/tools/dbtest/index.php
+https://stackoverflow.com/questions/54124262/how-to-fix-illuminate-database-queryexception-sqlstatehy000-1044-access-de
+
+<!-- wtf end -->

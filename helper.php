@@ -23,24 +23,27 @@ function install($home_path, $connect_to_db, $step){
   if ($form["step"] == 1) {
     $result = cmd_find_dir_home($result,$dir,$form);
     $result = cmd_find_webroot($result,$dir,$form);
-    // $result = cmd_depopulate_database($result,$dir,$form);
+
+    $result = cmd_depopulate_database($result,$dir,$form);
     $result = cmd_clear_space_for_the_app($result,$dir,$form);
     $result = cmd_download_app($result,$dir,$form);
     $result = cmd_find_app_path($result,$dir,$form);
     $result = cmd_deploy_webroot_files_part_1($result,$dir,$form);
     $result = cmd_deploy_webroot_files_part_2($result,$dir,$form);
+  }
+
+  // deploy perifery assets part 1 (libraries) and configurre
+  if ($form["step"] == 2) {
+    $result = cmd_find_app_path($result,$dir,$form);
+
+    $result = cmd_download_libraries($result,$dir,$form);
+
     $result = cmd_fix_paths_part_1($result,$dir,$form);
-    // $result = cmd_fix_paths_part_2($result,$dir,$form);
+    $result = cmd_fix_paths_part_2($result,$dir,$form);
     $result = cmd_fix_file_permissions($result,$dir,$form);
     $result = cmd_deploy_env($result,$dir,$form);
     $result = cmd_save_db_logins($result,$dir,$form);
     $result = cmd_generate_key($result,$dir,$form);
-  }
-
-  // deploy perifery assets part 1 (libraries)
-  if ($form["step"] == 2) {
-    $result = cmd_find_app_path($result,$dir,$form);
-    $result = cmd_download_libraries($result,$dir,$form);
   }
 
   // deploy perifery assets part 2 (db structure)
@@ -235,12 +238,15 @@ function cmd_fix_paths_part_1($result,$dir,$form){
 function cmd_fix_paths_part_2($result,$dir,$form){
 
   $app_path = $dir['app_path'];
-  $auto_loader_string_old = "__DIR__.'";
-  $auto_loader_string_new = "'$app_path";
-  $file = '../index.php';
+  $str_1 = "__DIR__.'";
+  $str_1 = preg_quote($str_1, '/');
+  $str_2 = "'$app_path";
+  $str_2 = preg_quote($str_2, '/');
+
+  $app_path = $dir['app_path'];
   $cmd_result = shell_write(
     $app_path,
-    "cp .env.example .env",
+    'sed -i "s/'.$str_1.'/'.$str_2.'/g" artisan',
     "Fix paths part 2"
   );
 
@@ -284,20 +290,34 @@ function cmd_deploy_env($result,$dir,$form){
 
 function cmd_save_db_logins($result,$dir,$form){
 
-  $string_old_1 = "connect_to_db_name";
-  $string_new_1 = $form["connect_to_db"]["name"];
-  $string_old_2 = "connect_to_db_user";
-  $string_new_2 = $form["connect_to_db"]["user"];
-  $string_old_3 = "connect_to_db_password";
-  $string_new_3 = $form["connect_to_db"]["password"];
+  $str1_1 = "connect_to_db_name";
+  $str1_1 = preg_quote($str1_1, '/');
+  $str1_2 = $form["connect_to_db"]["name"];
+  $str1_2 = preg_quote($str1_2, '/');
+
+  $str2_1 = "connect_to_db_user";
+  $str2_1 = preg_quote($str2_1, '/');
+  $str2_2 = $form["connect_to_db"]["user"];
+  $str2_2 = preg_quote($str2_2, '/');
+
+  $str3_1 = "connect_to_db_password";
+  $str3_1 = preg_quote($str3_1, '/');
+  $str3_2 = $form["connect_to_db"]["password"];
+  $str3_2 = preg_quote($str3_2, '/');
+
+  $str4_1 = "connect_to_db_host";
+  $str4_1 = preg_quote($str4_1, '/');
+  $str4_2 = $form["connect_to_db"]["host"];
+  $str4_2 = preg_quote($str4_2, '/');
 
 
   $app_path = $dir['app_path'];
   $cmd_result = shell_write(
     $app_path,
-    "sed -i 's/$string_old_1/$string_new_1/g' .env;
-    sed -i 's/$string_old_2/$string_new_2/g' .env;
-    sed -i 's/$string_old_3/$string_new_3/g' .env",
+    'sed -i "s/'.$str1_1.'/'.$str1_2.'/g" .env;
+    sed -i "s/'.$str2_1.'/'.$str2_2.'/g" .env;
+    sed -i "s/'.$str3_1.'/'.$str3_2.'/g" .env;
+    sed -i "s/'.$str4_1.'/'.$str4_2.'/g" .env',
     "Save DB logins"
   );
   array_push($result,$cmd_result);
@@ -341,6 +361,11 @@ function cmd_populate_database($result,$dir,$form){
   $cmd_result = shell_write(
     $app_path,
     // "php artisan migrate",
+    // "php artisan config:cache;
+    // php artisan config:clear;
+    // php artisan cache:clear;
+    // php artisan migrate --env=production;
+    // yes;",
     "php artisan migrate --env=production;
     yes;",
     "Populate database"
