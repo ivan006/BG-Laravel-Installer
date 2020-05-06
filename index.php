@@ -99,6 +99,17 @@ if (1==1) {
         </b>
       </label>
       <p>Run all steps please, in order.</p>
+      <ol>
+        <li>
+          Deploy core files
+        </li>
+        <li>
+          Deploy library files
+        </li>
+        <li>
+          Deploy configurations
+        </li>
+      </ol>
       <input type="number" id="" name="step" min="1" max="3" value="<?php echo $step_value ?>">
     </div>
     <br>

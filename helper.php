@@ -19,36 +19,33 @@ function install($home_path, $connect_to_db, $step){
     "home_path" => $home_path,
   );
 
-  // download core assets
+  // download core files
   if ($form["step"] == 1) {
     $result = cmd_find_dir_home($result,$dir,$form);
     $result = cmd_find_webroot($result,$dir,$form);
 
-    $result = cmd_depopulate_database($result,$dir,$form);
     $result = cmd_clear_space_for_the_app($result,$dir,$form);
     $result = cmd_download_app($result,$dir,$form);
     $result = cmd_find_app_path($result,$dir,$form);
     $result = cmd_deploy_webroot_files_part_1($result,$dir,$form);
-    $result = cmd_deploy_webroot_files_part_2($result,$dir,$form);
   }
 
-  // deploy perifery assets part 1 (libraries) and configurre
+  // deploy library files
   if ($form["step"] == 2) {
     $result = cmd_find_app_path($result,$dir,$form);
-
     $result = cmd_download_libraries($result,$dir,$form);
-
-    $result = cmd_fix_paths_part_1($result,$dir,$form);
-    $result = cmd_fix_paths_part_2($result,$dir,$form);
-    $result = cmd_fix_file_permissions($result,$dir,$form);
-    $result = cmd_deploy_env($result,$dir,$form);
-    $result = cmd_save_db_logins($result,$dir,$form);
-    $result = cmd_generate_key($result,$dir,$form);
   }
 
-  // deploy perifery assets part 2 (db structure)
+  // deploy configurations
   if ($form["step"] == 3) {
     $result = cmd_find_app_path($result,$dir,$form);
+
+    $result = cmd_fix_paths_part_1($result,$dir,$form);
+    $result = cmd_fix_file_permissions($result,$dir,$form);
+    $result = cmd_save_db_logins($result,$dir,$form);
+    $result = cmd_generate_key($result,$dir,$form);
+
+    $result = cmd_depopulate_database($result,$dir,$form);
     $result = cmd_populate_database($result,$dir,$form);
   }
 
@@ -95,7 +92,7 @@ function status_html($elements) {
 
 function shell_find_dir($dir,$label){
   $result = array(
-    "Find $label dir",
+    "Check $label dir",
   );
   $shell_result = rtrim(shell_exec("cd $dir; pwd"));
   if ($shell_result !== $dir) {
@@ -162,7 +159,7 @@ function cmd_clear_space_for_the_app($result,$dir,$form){
   $cmd_result = shell_write(
     $dir['home_path'],
     "rm -rf 'FlexFile-3'",
-    "Clear space for the app"
+    "Delete old app"
   );
   array_push($result,$cmd_result);
   if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
@@ -193,22 +190,9 @@ function cmd_deploy_webroot_files_part_1($result,$dir,$form){
   $app_path = $dir['app_path'];
   $cmd_result = shell_write(
     $dir['webroot_path'],
-    "cp -a $app_path/public/* ./",
-    "Deploy webroot files part 1"
-  );
-  array_push($result,$cmd_result);
-  if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
-  return $result;
-
-}
-
-function cmd_deploy_webroot_files_part_2($result,$dir,$form){
-
-  $app_path = $dir['app_path'];
-  $cmd_result = shell_write(
-    $dir['webroot_path'],
-    "cp -r $app_path/public/.htaccess ./",
-    "Deploy webroot files part 2"
+    "cp -a $app_path/public/* ./;
+    cp -r $app_path/public/.htaccess ./",
+    "Deploy webroot files"
   );
   array_push($result,$cmd_result);
   if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
@@ -217,37 +201,30 @@ function cmd_deploy_webroot_files_part_2($result,$dir,$form){
 }
 
 function cmd_fix_paths_part_1($result,$dir,$form){
-  $app_path = $dir['app_path'];
-
-  $auto_loader_string_old = "__DIR__.'/..";
-  $auto_loader_string_new = "'$app_path";
-  $file = '../index.php';
-  file_put_contents($file,str_replace($auto_loader_string_old,$auto_loader_string_new,file_get_contents($file)));
-
-  $cmd_result = array(
-    "Fix paths part 1",
-    "Success"
-  );
-
-  array_push($result,$cmd_result);
-  if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
-  return $result;
-
-}
-
-function cmd_fix_paths_part_2($result,$dir,$form){
 
   $app_path = $dir['app_path'];
-  $str_1 = "__DIR__.'";
-  $str_1 = preg_quote($str_1, '/');
-  $str_2 = "'$app_path";
-  $str_2 = preg_quote($str_2, '/');
+  $str1_1 = "__DIR__.'";
+  $str1_1 = preg_quote($str1_1, '/');
+  $str1_2 = "'$app_path";
+  $str1_2 = preg_quote($str1_2, '/');
 
   $app_path = $dir['app_path'];
   $cmd_result = shell_write(
     $app_path,
-    'sed -i "s/'.$str_1.'/'.$str_2.'/g" artisan',
-    "Fix paths part 2"
+    'sed -i "s/'.$str1_1.'/'.$str1_2.'/g" artisan',
+    ""
+  );
+
+  $str2_1 = "__DIR__.'/..";
+  $str2_1 = preg_quote($str2_1, '/');
+  $str2_2 = "'$app_path";
+  $str2_2 = preg_quote($str2_2, '/');
+
+  $webroot_path = $dir['webroot_path'];
+  $cmd_result = shell_write(
+    $webroot_path,
+    'sed -i "s/'.$str2_1.'/'.$str2_2.'/g" index.php',
+    "Fix paths"
   );
 
   array_push($result,$cmd_result);
@@ -265,21 +242,6 @@ function cmd_fix_file_permissions($result,$dir,$form){
   "chown -R www-data:root $app_path;
   chmod 755 $app_path/storage",
   "Fix file permissions"
-  );
-
-  array_push($result,$cmd_result);
-  if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
-  return $result;
-
-}
-
-function cmd_deploy_env($result,$dir,$form){
-
-  $app_path = $dir['app_path'];
-  $cmd_result = shell_write(
-  $app_path,
-  "cp .env.example .env",
-  "Deploy .env"
   );
 
   array_push($result,$cmd_result);
@@ -314,7 +276,8 @@ function cmd_save_db_logins($result,$dir,$form){
   $app_path = $dir['app_path'];
   $cmd_result = shell_write(
     $app_path,
-    'sed -i "s/'.$str1_1.'/'.$str1_2.'/g" .env;
+    'cp .env.example .env;
+    sed -i "s/'.$str1_1.'/'.$str1_2.'/g" .env;
     sed -i "s/'.$str2_1.'/'.$str2_2.'/g" .env;
     sed -i "s/'.$str3_1.'/'.$str3_2.'/g" .env;
     sed -i "s/'.$str4_1.'/'.$str4_2.'/g" .env',
