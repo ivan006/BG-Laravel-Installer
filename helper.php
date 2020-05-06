@@ -1,8 +1,8 @@
 <?php
 function install($home_path, $connect_to_db, $step){
 
-  // run_command("rm -rf *"),
-  // run_command("ls -la .."),
+  // rm -rf *
+  // ls -la ..
   // cp -a FlexFile-3/public/. public_html/
   // ln -s /usr/www/users/bluegpyuty  public_html
 
@@ -243,7 +243,6 @@ function cmd_fix_file_permissions($result,$dir,$form){
   chmod 755 $app_path/storage",
   "Fix file permissions"
   );
-
   array_push($result,$cmd_result);
   if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
   return $result;
