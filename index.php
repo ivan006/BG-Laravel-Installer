@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 include("password.php");
 include("helper.php");
-$title = "Startupify Installer - A online admin system for startups";
+$title = "Laravel app installer";
 
 
 
@@ -18,16 +18,22 @@ if (1==1) {
     $password_value = "";
   }
 
-  if (isset($_POST["home_dir_path"])) {
-    $home_dir_path = $_POST["home_dir_path"];
+  if (isset($_POST["home_path"])) {
+    $home_path = $_POST["home_path"];
   } else {
-    $home_dir_path = "";
+    $home_path = "";
   }
 
   if (isset($_POST["subdomain_dir"])) {
     $subdomain_dir = $_POST["subdomain_dir"];
   } else {
     $subdomain_dir = "";
+  }
+
+  if (isset($_POST["github_repo_url"])) {
+    $github_repo_url = $_POST["github_repo_url"];
+  } else {
+    $github_repo_url = "";
   }
 
   if (isset($_POST["connect_to_db_name"])) {
@@ -69,6 +75,14 @@ if (1==1) {
 
   <form action="" method="post">
     <div class="form-group">
+      <label>
+        <b>
+          Github repo URL
+        </b>
+      </label>
+      <input type="text" class="form-control" placeholder="E.g. https://github.com/ivan006/FlexFile-3" name="github_repo_url" value="<?php echo $github_repo_url ?>">
+    </div>
+    <div class="form-group">
       <label for="pwd">
         <b>
           Login
@@ -84,7 +98,7 @@ if (1==1) {
           Find home directory
         </b>
       </label>
-      <input type="text" class="form-control" placeholder="E.g. /usr/home/bluegpyuty" name="home_dir_path" value="<?php echo $home_dir_path ?>">
+      <input type="text" class="form-control" placeholder="E.g. /usr/home/bluegpyuty" name="home_path" value="<?php echo $home_path ?>">
     </div>
     <div class="form-group">
       <label>
@@ -148,7 +162,7 @@ if (isset($_POST["password"])) {
   if ($_POST["password"] == $password) {
     $step = $_POST["step"];
 
-    $install = install($home_dir_path, $connect_to_db, $step, $subdomain_dir);
+    $install = install($home_path, $connect_to_db, $step, $subdomain_dir, $github_repo_url);
     $result = $install;
   } else {
     $result = "Failed to login.";

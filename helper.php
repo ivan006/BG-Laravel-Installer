@@ -1,5 +1,5 @@
 <?php
-function install($home_path, $connect_to_db, $step, $subdomain_dir){
+function install($home_path, $connect_to_db, $step, $subdomain_dir, $github_repo_url){
 
   // rm -rf *
   // ls -la ..
@@ -17,45 +17,46 @@ function install($home_path, $connect_to_db, $step, $subdomain_dir){
   // }
   //
 
-  $dir = array(
+  $inputs = array(
     "subdomain_dir" => $subdomain_dir,
     // /usr/home/bluegpyuty/FlexFile-3
     "app_path" => $home_path."/".$subdomain_dir."_Startupify",
     "webroot_path" => $home_path."/public_html",
     "home_path" => $home_path,
+    "github_repo_url" => $github_repo_url,
   );
   if ($subdomain_dir !== "") {
-    $dir["webroot_path"] = $dir["webroot_path"]."/".$subdomain_dir;
+    $inputs["webroot_path"] = $inputs["webroot_path"]."/".$subdomain_dir;
   }
 
   // download core files
   if ($form["step"] == 1) {
-    $result = cmd_find_dir_home($result,$dir,$form);
-    $result = cmd_find_webroot($result,$dir,$form);
+    $result = cmd_find_dir_home($result,$inputs,$form);
+    $result = cmd_find_webroot($result,$inputs,$form);
 
-    $result = cmd_clear_space_for_the_app($result,$dir,$form);
-    $result = cmd_download_app($result,$dir,$form);
-    $result = cmd_find_app_path($result,$dir,$form);
-    $result = cmd_deploy_webroot_files_part_1($result,$dir,$form);
+    $result = cmd_clear_space_for_the_app($result,$inputs,$form);
+    $result = cmd_download_app($result,$inputs,$form);
+    $result = cmd_find_app_path($result,$inputs,$form);
+    $result = cmd_deploy_webroot_files_part_1($result,$inputs,$form);
   }
 
   // deploy library files
   if ($form["step"] == 2) {
-    $result = cmd_find_app_path($result,$dir,$form);
-    $result = cmd_download_libraries($result,$dir,$form);
+    $result = cmd_find_app_path($result,$inputs,$form);
+    $result = cmd_download_libraries($result,$inputs,$form);
   }
 
   // deploy configurations
   if ($form["step"] == 3) {
-    $result = cmd_find_app_path($result,$dir,$form);
+    $result = cmd_find_app_path($result,$inputs,$form);
 
-    $result = cmd_fix_paths_part_1($result,$dir,$form);
-    $result = cmd_fix_file_permissions($result,$dir,$form);
-    $result = cmd_save_db_logins($result,$dir,$form);
-    $result = cmd_generate_key($result,$dir,$form);
+    $result = cmd_fix_paths_part_1($result,$inputs,$form);
+    $result = cmd_fix_file_permissions($result,$inputs,$form);
+    $result = cmd_save_db_logins($result,$inputs,$form);
+    $result = cmd_generate_key($result,$inputs,$form);
 
-    $result = cmd_depopulate_database($result,$dir,$form);
-    $result = cmd_populate_database($result,$dir,$form);
+    $result = cmd_depopulate_database($result,$inputs,$form);
+    $result = cmd_populate_database($result,$inputs,$form);
   }
 
   $html = status_html($result);
@@ -99,12 +100,12 @@ function status_html($elements) {
   return $result;
 }
 
-function shell_find_dir($dir,$label){
+function shell_find_dir($inputs,$label){
   $result = array(
     "Check $label dir",
   );
-  $shell_result = rtrim(shell_exec("cd $dir; pwd"));
-  if ($shell_result !== $dir) {
+  $shell_result = rtrim(shell_exec("cd $inputs; pwd"));
+  if ($shell_result !== $inputs) {
     array_push($result,"Fail");
   } else {
     array_push($result,"Success");
@@ -112,13 +113,13 @@ function shell_find_dir($dir,$label){
   return $result;
 }
 
-function shell_write($dir,$cmd,$label){
+function shell_write($inputs,$cmd,$label){
   $result = array(
     $label,
   );
 
   exec(
-    "cd $dir;
+    "cd $inputs;
     $cmd 2>&1"
     , $outputs
   );
@@ -136,23 +137,23 @@ function abort_install($error){
 }
 
 
-function cmd_find_dir_home($result,$dir,$form){
-  $cmd_result = shell_find_dir($dir['home_path'],"home");
+function cmd_find_dir_home($result,$inputs,$form){
+  $cmd_result = shell_find_dir($inputs['home_path'],"home");
   array_push($result,$cmd_result);
   if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
   return $result;
 }
 
-function cmd_find_webroot($result,$dir,$form){
-  $cmd_result = shell_find_dir($dir['webroot_path'],"webroot");
+function cmd_find_webroot($result,$inputs,$form){
+  $cmd_result = shell_find_dir($inputs['webroot_path'],"webroot");
   array_push($result,$cmd_result);
   if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
   return $result;
 }
 
-function cmd_depopulate_database($result,$dir,$form){
+function cmd_depopulate_database($result,$inputs,$form){
 
-  $app_path = $dir['app_path'];
+  $app_path = $inputs['app_path'];
   // "php artisan migrate",
   $cmd_result = shell_write(
     $app_path,
@@ -164,10 +165,10 @@ function cmd_depopulate_database($result,$dir,$form){
   return $result;
 }
 
-function cmd_clear_space_for_the_app($result,$dir,$form){
-  $app_name = $dir['subdomain_dir']."_Startupify";
+function cmd_clear_space_for_the_app($result,$inputs,$form){
+  $app_name = $inputs['subdomain_dir']."_Startupify";
   $cmd_result = shell_write(
-    $dir['home_path'],
+    $inputs['home_path'],
     "rm -rf '$app_name';
     mkdir $app_name",
     "Prepare app folder"
@@ -177,11 +178,11 @@ function cmd_clear_space_for_the_app($result,$dir,$form){
   return $result;
 }
 
-function cmd_download_app($result,$dir,$form){
-  $app_path = $dir['app_path'];
+function cmd_download_app($result,$inputs,$form){
+  $app_path = $inputs['app_path'];
   $cmd_result = shell_write(
     $app_path,
-    "git clone https://github.com/ivan006/FlexFile-3 .",
+    "git clone ".$inputs['github_repo_url']." .",
     "Download app"
   );
   array_push($result,$cmd_result);
@@ -189,19 +190,19 @@ function cmd_download_app($result,$dir,$form){
   return $result;
 }
 
-function cmd_find_app_path($result,$dir,$form){
+function cmd_find_app_path($result,$inputs,$form){
 
-  $app_path = $dir['app_path'];
+  $app_path = $inputs['app_path'];
   $cmd_result = shell_find_dir($app_path,"app");
   array_push($result,$cmd_result);
   if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
   return $result;
 }
 
-function cmd_deploy_webroot_files_part_1($result,$dir,$form){
-  $app_path = $dir['app_path'];
+function cmd_deploy_webroot_files_part_1($result,$inputs,$form){
+  $app_path = $inputs['app_path'];
   $cmd_result = shell_write(
-    $dir['webroot_path'],
+    $inputs['webroot_path'],
     "cp -a $app_path/public/* ./;
     cp -r $app_path/public/.htaccess ./",
     "Deploy webroot files"
@@ -212,15 +213,15 @@ function cmd_deploy_webroot_files_part_1($result,$dir,$form){
 
 }
 
-function cmd_fix_paths_part_1($result,$dir,$form){
+function cmd_fix_paths_part_1($result,$inputs,$form){
 
-  $app_path = $dir['app_path'];
+  $app_path = $inputs['app_path'];
   $str1_1 = "__DIR__.'";
   $str1_1 = preg_quote($str1_1, '/');
   $str1_2 = "'$app_path";
   $str1_2 = preg_quote($str1_2, '/');
 
-  $app_path = $dir['app_path'];
+  $app_path = $inputs['app_path'];
   $cmd_result = shell_write(
     $app_path,
     'sed -i "s/'.$str1_1.'/'.$str1_2.'/g" artisan',
@@ -232,7 +233,7 @@ function cmd_fix_paths_part_1($result,$dir,$form){
   $str2_2 = "'$app_path";
   $str2_2 = preg_quote($str2_2, '/');
 
-  $webroot_path = $dir['webroot_path'];
+  $webroot_path = $inputs['webroot_path'];
   $cmd_result = shell_write(
     $webroot_path,
     'sed -i "s/'.$str2_1.'/'.$str2_2.'/g" index.php',
@@ -245,10 +246,10 @@ function cmd_fix_paths_part_1($result,$dir,$form){
 
 }
 
-function cmd_fix_file_permissions($result,$dir,$form){
+function cmd_fix_file_permissions($result,$inputs,$form){
 
 
-  $app_path = $dir['app_path'];
+  $app_path = $inputs['app_path'];
   $cmd_result = shell_write(
   $app_path,
   "chown -R www-data:root $app_path;
@@ -261,7 +262,7 @@ function cmd_fix_file_permissions($result,$dir,$form){
 
 }
 
-function cmd_save_db_logins($result,$dir,$form){
+function cmd_save_db_logins($result,$inputs,$form){
 
   $str1_1 = "connect_to_db_name";
   $str1_1 = preg_quote($str1_1, '/');
@@ -284,7 +285,7 @@ function cmd_save_db_logins($result,$dir,$form){
   $str4_2 = preg_quote($str4_2, '/');
 
 
-  $app_path = $dir['app_path'];
+  $app_path = $inputs['app_path'];
   $cmd_result = shell_write(
     $app_path,
     'cp .env.example .env;
@@ -300,9 +301,9 @@ function cmd_save_db_logins($result,$dir,$form){
 
 }
 
-function cmd_generate_key($result,$dir,$form){
+function cmd_generate_key($result,$inputs,$form){
 
-  $app_path = $dir['app_path'];
+  $app_path = $inputs['app_path'];
   $cmd_result = shell_write(
   $app_path,
   "php artisan key:generate",
@@ -314,9 +315,9 @@ function cmd_generate_key($result,$dir,$form){
 
 }
 
-function cmd_download_libraries($result,$dir,$form){
+function cmd_download_libraries($result,$inputs,$form){
 
-  $app_path = $dir['app_path'];
+  $app_path = $inputs['app_path'];
   $cmd_result = shell_write(
     $app_path,
     "composer install",
@@ -328,9 +329,9 @@ function cmd_download_libraries($result,$dir,$form){
 
 }
 
-function cmd_populate_database($result,$dir,$form){
+function cmd_populate_database($result,$inputs,$form){
 
-  $app_path = $dir['app_path'];
+  $app_path = $inputs['app_path'];
   // "php artisan migrate",
   $cmd_result = shell_write(
     $app_path,
