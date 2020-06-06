@@ -24,6 +24,12 @@ if (1==1) {
     $home_dir_path = "";
   }
 
+  if (isset($_POST["subdomain_dir"])) {
+    $subdomain_dir = $_POST["subdomain_dir"];
+  } else {
+    $subdomain_dir = "";
+  }
+
   if (isset($_POST["connect_to_db_name"])) {
     $connect_to_db["name"] = $_POST["connect_to_db_name"];
   } else {
@@ -83,6 +89,14 @@ if (1==1) {
     <div class="form-group">
       <label>
         <b>
+          Subdomain directory (leave blank if none)
+        </b>
+      </label>
+      <input type="text" class="form-control" placeholder="E.g. test1.bluegemify.co.za" name="subdomain_dir" value="<?php echo $subdomain_dir ?>">
+    </div>
+    <div class="form-group">
+      <label>
+        <b>
           <!-- Resolve Home Directory Confusion -->
           Connect to DB
         </b>
@@ -133,7 +147,8 @@ $result = "";
 if (isset($_POST["password"])) {
   if ($_POST["password"] == $password) {
     $step = $_POST["step"];
-    $install = install($home_dir_path,$connect_to_db,$step);
+
+    $install = install($home_dir_path, $connect_to_db, $step, $subdomain_dir);
     $result = $install;
   } else {
     $result = "Failed to login.";

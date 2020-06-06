@@ -1,5 +1,5 @@
 <?php
-function install($home_path, $connect_to_db, $step){
+function install($home_path, $connect_to_db, $step, $subdomain_dir){
 
   // rm -rf *
   // ls -la ..
@@ -12,12 +12,21 @@ function install($home_path, $connect_to_db, $step){
   );
 
   $result = array();
+  // if ($subdomain_dir == "") {
+  //   // code...
+  // }
+  //
+
   $dir = array(
-    "app_path" => $home_path."/FlexFile-3",
+    "subdomain_dir" => $subdomain_dir,
     // /usr/home/bluegpyuty/FlexFile-3
+    "app_path" => $home_path."/".$subdomain_dir."_Startupify",
     "webroot_path" => $home_path."/public_html",
     "home_path" => $home_path,
   );
+  if ($subdomain_dir !== "") {
+    $dir["webroot_path"] = $dir["webroot_path"]."/".$subdomain_dir;
+  }
 
   // download core files
   if ($form["step"] == 1) {
@@ -156,10 +165,12 @@ function cmd_depopulate_database($result,$dir,$form){
 }
 
 function cmd_clear_space_for_the_app($result,$dir,$form){
+  $app_name = $dir['subdomain_dir']."_Startupify";
   $cmd_result = shell_write(
     $dir['home_path'],
-    "rm -rf 'FlexFile-3'",
-    "Delete old app"
+    "rm -rf '$app_name';
+    mkdir $app_name",
+    "Prepare app folder"
   );
   array_push($result,$cmd_result);
   if ( $cmd_result[1] == "Error") { abort_install(count($result)); }
@@ -167,9 +178,10 @@ function cmd_clear_space_for_the_app($result,$dir,$form){
 }
 
 function cmd_download_app($result,$dir,$form){
+  $app_path = $dir['app_path'];
   $cmd_result = shell_write(
-    $dir['home_path'],
-    "git clone https://github.com/ivan006/FlexFile-3",
+    $app_path,
+    "git clone https://github.com/ivan006/FlexFile-3 .",
     "Download app"
   );
   array_push($result,$cmd_result);
