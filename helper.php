@@ -20,7 +20,7 @@ function install($home_path, $connect_to_db, $step, $subdomain_dir, $github_repo
   $inputs = array(
     "subdomain_dir" => $subdomain_dir,
     // /usr/home/bluegpyuty/FlexFile-3
-    "app_path" => $home_path."/".$subdomain_dir."_Startupify",
+    "app_path" => $home_path."/".$subdomain_dir."_app",
     "webroot_path" => $home_path."/public_html",
     "home_path" => $home_path,
     "github_repo_url" => $github_repo_url,
@@ -166,7 +166,7 @@ function cmd_depopulate_database($result,$inputs,$form){
 }
 
 function cmd_clear_space_for_the_app($result,$inputs,$form){
-  $app_name = $inputs['subdomain_dir']."_Startupify";
+  $app_name = $inputs['subdomain_dir']."_app";
   $cmd_result = shell_write(
     $inputs['home_path'],
     "rm -rf '$app_name';

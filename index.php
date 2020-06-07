@@ -80,7 +80,7 @@ if (1==1) {
           Github repo URL
         </b>
       </label>
-      <input type="text" class="form-control" placeholder="E.g. https://github.com/ivan006/FlexFile-3" name="github_repo_url" value="<?php echo $github_repo_url ?>">
+      <input type="text" class="form-control" placeholder="E.g. https://github.com/ivan006/Startupify-3" name="github_repo_url" value="<?php echo $github_repo_url ?>">
     </div>
     <div class="form-group">
       <label for="pwd">
