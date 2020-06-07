@@ -1,3 +1,3 @@
 Web Skills - Laravel App Installer (example is for subdomain) 
 
-https://www.youtube.com/embed/DP8FuPcGix8
+https://www.youtube.com/watch?v=DP8FuPcGix8&feature=youtu.be
