@@ -60,6 +60,12 @@ if (1==1) {
     $connect_to_db["host"] = "";
   }
 
+  if (isset($_POST["webroot_parent_path"])) {
+    $webroot_parent_path = $_POST["webroot_parent_path"];
+  } else {
+    $webroot_parent_path = "";
+  }
+
   $step = 1;
   $step_value = 1;
   if (isset($_POST["step"])) {
@@ -75,21 +81,21 @@ if (1==1) {
 
   <form action="" method="post">
     <div class="form-group">
+      <div class="form-group">
+        <label for="pwd">
+          <b>
+            Login
+          </b>
+        </label>
+
+        <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password" value="<?php echo $password_value ?>">
+      </div>
       <label>
         <b>
           Github repo URL
         </b>
       </label>
       <input type="text" class="form-control" placeholder="E.g. https://github.com/ivan006/Startupify-3" name="github_repo_url" value="<?php echo $github_repo_url ?>">
-    </div>
-    <div class="form-group">
-      <label for="pwd">
-        <b>
-          Login
-        </b>
-      </label>
-
-      <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password" value="<?php echo $password_value ?>">
     </div>
     <div class="form-group">
       <label>
@@ -99,6 +105,14 @@ if (1==1) {
         </b>
       </label>
       <input type="text" class="form-control" placeholder="E.g. /usr/home/bluegpyuty" name="home_path" value="<?php echo $home_path ?>">
+    </div>
+    <div class="form-group">
+      <label>
+        <b>
+          Find webroot parent directory
+        </b>
+      </label>
+      <input type="text" class="form-control" placeholder="E.g. /usr/www/users/bluegpyuty" name="webroot_parent_path" value="<?php echo $webroot_parent_path ?>">
     </div>
     <div class="form-group">
       <label>
@@ -162,7 +176,7 @@ if (isset($_POST["password"])) {
   if ($_POST["password"] == $password) {
     $step = $_POST["step"];
 
-    $install = install($home_path, $connect_to_db, $step, $subdomain_dir, $github_repo_url);
+    $install = install($home_path, $connect_to_db, $step, $subdomain_dir, $github_repo_url, $webroot_parent_path);
     $result = $install;
   } else {
     $result = "Failed to login.";

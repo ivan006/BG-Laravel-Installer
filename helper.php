@@ -1,5 +1,5 @@
 <?php
-function install($home_path, $connect_to_db, $step, $subdomain_dir, $github_repo_url){
+function install($home_path, $connect_to_db, $step, $subdomain_dir, $github_repo_url, $webroot_parent_path){
 
   // rm -rf *
   // ls -la ..
@@ -21,7 +21,7 @@ function install($home_path, $connect_to_db, $step, $subdomain_dir, $github_repo
     "subdomain_dir" => $subdomain_dir,
     // /usr/home/bluegpyuty/FlexFile-3
     "app_path" => $home_path."/".$subdomain_dir."_app",
-    "webroot_path" => $home_path."/public_html",
+    "webroot_path" => $webroot_parent_path,
     "home_path" => $home_path,
     "github_repo_url" => $github_repo_url,
   );
