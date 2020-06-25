@@ -101,7 +101,7 @@ if (1==1) {
       <label>
         <b>
           <!-- Resolve Home Directory Confusion -->
-          Find home directory
+          Find home directory (app source code dir)
         </b>
       </label>
       <input type="text" class="form-control" placeholder="E.g. /usr/home/bluegpyuty" name="home_path" value="<?php echo $home_path ?>">
@@ -109,7 +109,7 @@ if (1==1) {
     <div class="form-group">
       <label>
         <b>
-          Find webroot parent directory
+          Find webroot parent directory (app webroot dir)
         </b>
       </label>
       <input type="text" class="form-control" placeholder="E.g. /usr/www/users/bluegpyuty" name="webroot_parent_path" value="<?php echo $webroot_parent_path ?>">
