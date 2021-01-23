@@ -144,12 +144,55 @@ if (1==1) {
       <ol>
         <li>
           Deploy core files
+          <details>
+            <summary>
+              More info
+            </summary>
+            <ul>
+
+              <li>cmd_find_dir_home</li>
+              <li>cmd_find_webroot</li>
+
+              <li>cmd_clear_space_for_the_app</li>
+              <li>cmd_download_app</li>
+              <li>cmd_find_app_path</li>
+              <li>cmd_deploy_webroot_files_part_1</li>
+            </ul>
+          </details>
         </li>
         <li>
           Deploy library files
+          <details>
+            <summary>
+              More info
+            </summary>
+            <ul>
+              <li>cmd_find_app_path</li>
+              <li>cmd_download_libraries</li>
+            </ul>
+          </details>
+
         </li>
         <li>
           Deploy configurations
+          <details>
+            <summary>
+              More info
+            </summary>
+            <ul>
+              <li>cmd_find_app_path</li>
+
+              <li>cmd_fix_paths_part_1</li>
+              <li>cmd_fix_file_permissions</li>
+              <li>cmd_save_db_logins</li>
+              <li>cmd_generate_key</li>
+
+              <li>cmd_depopulate_database</li>
+              <li>cmd_populate_database</li>
+
+            </ul>
+          </details>
+
         </li>
       </ol>
       <input type="number" id="" name="step" min="1" max="3" value="<?php echo $step_value ?>">
