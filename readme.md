@@ -2,7 +2,12 @@ Web Skills - Laravel App Installer (example is for subdomain)
 
 https://www.youtube.com/watch?v=DP8FuPcGix8&feature=youtu.be
 
-
+# Pull after ftp uploads
+```
+git reset --hard HEAD
+git clean -f -d
+git pull
+```
 # For use with Symphony apps
 
 Just do step 1 and 2 and fix kernal locations
