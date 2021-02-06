@@ -11,10 +11,10 @@ Just do step 1 and 2 and fix kernal locations
 - Orient to "public/index.php"
 - Replace 
   - `require dirname(__DIR__).'/vendor/autoload.php';` with
-  - with `require '[your home dir path here]'.'/vendor/autoload.php';`
+  - with `require '[your app dir path here]'.'/vendor/autoload.php';`
 - Also replace
   - `(new Dotenv())->bootEnv(dirname(__DIR__).'/.env');`
-  - with `(new Dotenv())->bootEnv('[your home dir path here]'.'/.env');`
+  - with `(new Dotenv())->bootEnv('[your app dir path here]'.'/.env');`
 - Upload this to the root of your webroot not to your home dir
 
 
